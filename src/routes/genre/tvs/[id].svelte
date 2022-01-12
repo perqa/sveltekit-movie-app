@@ -1,8 +1,8 @@
 <script context="module" lang="ts">
 	import { media_type } from '$lib/stores/store';
 	media_type.set('tv')
-	export const load = async ({ fetch, page }) => {
-		const genres = page.params.id
+	export const load = async ({ fetch, params }) => {
+		const genres = params.id
 		const res = await fetch('../../api/getShowGenre', {
 			headers: {
       			'Content-Type': 'application/json'

@@ -1,13 +1,13 @@
 <script context="module" lang="ts">
-	export async function load({fetch, page }) {
+	export async function load({fetch, params }) {
 		const res =await fetch('../../api/getSeason', {
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			method: 'POST',
 			body: JSON.stringify({
-				id: page.params.id,
-				season_number: page.params.season_number,
+				id: params.id,
+				season_number: params.season_number,
 			})
 		})
 		const datas = await res.json();

@@ -1,0 +1,6 @@
+>>> DOM loaded
+>>> header
+>>> movie-card
+>>> movie-list
+>>> main
+>>> layout

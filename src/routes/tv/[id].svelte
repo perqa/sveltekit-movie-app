@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	import { media_type } from '$lib/stores/store';
 
-	export const load = async ({ page , fetch }) => {
+	export const load = async ({ params , fetch }) => {
 
 		const res =await fetch('../api/getMovie', {
 			headers: {
@@ -10,7 +10,7 @@
 			method: 'POST',
 			body: JSON.stringify({
 				media: 'tv',
-				id: page.params.id
+				id: params.id
 			})
 		})
 		const datas = await res.json()
@@ -23,12 +23,12 @@
 			method: 'POST',
 			body: JSON.stringify({
 				media: 'tv',
-				id: page.params.id
+				id: params.id
 			})
 		})
 		const trailer_details = await trailer.json()
 		const trailer_id: number = await trailer_details.res.results.length ? trailer_details.res.results[0].key : 999
-		
+
 		const resp = await fetch('../../api/getCast', {
 		headers: {
       			'Content-Type': 'application/json'
@@ -36,7 +36,7 @@
 			method: 'POST',
 			body: JSON.stringify({
 				media: 'tv',
-				id: page.params.id
+				id: params.id
 			})
 		});
 		const casts = await resp.json()

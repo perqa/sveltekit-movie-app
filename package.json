@@ -2,19 +2,20 @@
 	"name": "sveltekit-movie-app",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "svelte-kit dev",
+		"dev": "svelte-kit dev ",
 		"build": "svelte-kit build",
 		"preview": "svelte-kit preview",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --ignore-path .gitignore  --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
-		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
+		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
+		"help": "svelte-kit dev --help"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-netlify": "^1.0.0-next.35",
 		"@sveltejs/adapter-node": "^1.0.0-next.55",
 		"@sveltejs/adapter-static": "^1.0.0-next.21",
-		"@sveltejs/kit": "^1.0.0-next.201",
+		"@sveltejs/kit": "^1.0.0-next.218",
 		"@typescript-eslint/eslint-plugin": "^5.5.0",
 		"@typescript-eslint/parser": "^5.5.0",
 		"autoprefixer": "^10.4.0",
@@ -37,10 +38,11 @@
 	},
 	"type": "module",
 	"engines": {
-		"node": ">= 12.17.0"
+		"node": ">= 16.0.0"
 	},
 	"dependencies": {
 		"@tailwindcss/line-clamp": "^0.2.2",
+		"lrud": "file:../lrud",
 		"sapper-environment": "^1.0.1"
 	}
 }

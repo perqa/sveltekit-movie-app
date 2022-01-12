@@ -1,14 +1,14 @@
 <script context="module" lang="ts">
 	import { media_type, current_page } from '$lib/stores/store';
 	import { get } from 'svelte/store';
-	export async function load({ fetch, page }) {
+	export async function load({ fetch, params }) {
 		const res = await fetch('../../api/getShow', {
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			method: 'POST',
 			body: JSON.stringify({
-				media: page.params.media,
+				media: params.media,
 				page: get(current_page)
 			})
 		});

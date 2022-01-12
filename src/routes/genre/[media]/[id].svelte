@@ -1,21 +1,21 @@
 <script context="module" lang="ts">
 	import { media_type } from '$lib/stores/store';
-	
-	export const load = async ({ fetch, page }) => {
-		const genres = page.params.id
-		media_type.set(page.params.media)
+
+	export const load = async ({ fetch, params }) => {
+		const genres = params.id
+		media_type.set(params.media)
 		const res = await fetch('../../api/getShowGenre', {
 			headers: {
       			'Content-Type': 'application/json'
 			},
 			method: 'POST',
 			body: JSON.stringify({
-				media: page.params.media,
+				media: params.media,
 				page: '1',
 				genre: genres
 			})
 		});
-		
+
 		const datas = await res.json();
 		const data = await datas.res.results;
 		const total_pages = await datas.res.total_pages;

@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	import { media_type } from '$lib/stores/store';
 	import { get } from 'svelte/store';
-	export async function load({ fetch, page }) {
+	export async function load({ fetch, params }) {
 		const res = await fetch('../api/getSearch', {
 			headers: {
 				'Content-Type': 'application/json'
@@ -10,7 +10,7 @@
 			body: JSON.stringify({
 				media: get(media_type),
 				page: '1',
-				query: page.params.id
+				query: params.id
 			})
 		});
 		const datas = await res.json();

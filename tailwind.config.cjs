@@ -61,7 +61,7 @@ const config = {
 	variants: {
 		extend: {
 			backgroundColor: ['active'],
-			transform: ['group-hover']
+			transform: ['group-hover', 'focus-visible']
 		}
 	},
 	plugins: [
@@ -84,7 +84,7 @@ const config = {
 				}
 			};
 
-			addUtilities(newUtilities, ['group-hover']);
+			addUtilities(newUtilities, ['group-hover', 'focus-visible']);
 		}),
 		require('@tailwindcss/line-clamp')
 	]

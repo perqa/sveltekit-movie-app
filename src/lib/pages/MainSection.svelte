@@ -5,10 +5,16 @@
 	import InfiniteScroll from '$lib/utilities/InfiniteScroll.svelte';
 	import { current_page, media_type } from '$lib/stores/store';
 	import { get } from 'svelte/store';
+	import { beforeUpdate } from 'svelte';
 
 	export let data = [];
 	export let total_pages = 1;
 	export let genres = undefined;
+
+	console.info('>>> main data', data && data[0]);
+	beforeUpdate(async () => {
+		console.info('>>> main data beforeUpdate', data && data[0]);
+	});
 
 	async function moreData() {
 		let res
@@ -40,6 +46,7 @@
 		const datas = await res.json();
 		const res_results = datas.res.results;
 		data = [...data, ...res_results];
+		console.info('>>> fetch data:', data)
 	}
 
 	function loadMorePages() {
