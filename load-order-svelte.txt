@@ -4,3 +4,6 @@
 >>> movie-list
 >>> main
 >>> layout
+
+
+Failed to fetch dynamically imported module: http://localhost:3000/src/routes/movie/[id].svelte

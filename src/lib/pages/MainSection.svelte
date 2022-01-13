@@ -5,16 +5,14 @@
 	import InfiniteScroll from '$lib/utilities/InfiniteScroll.svelte';
 	import { current_page, media_type } from '$lib/stores/store';
 	import { get } from 'svelte/store';
-	import { beforeUpdate } from 'svelte';
+	import { onMount } from 'svelte';
+	import { reFocus, addPage } from '$lib/stores/keyNavigation';
 
 	export let data = [];
 	export let total_pages = 1;
 	export let genres = undefined;
 
-	console.info('>>> main data', data && data[0]);
-	beforeUpdate(async () => {
-		console.info('>>> main data beforeUpdate', data && data[0]);
-	});
+	onMount(reFocus);
 
 	async function moreData() {
 		let res
@@ -46,12 +44,13 @@
 		const datas = await res.json();
 		const res_results = datas.res.results;
 		data = [...data, ...res_results];
-		console.info('>>> fetch data:', data)
 	}
 
-	function loadMorePages() {
+	async function loadMorePages() {
 		$current_page++;
-		moreData();
+		await moreData();
+		// ToDo: check if the new nodes have been registered before calling addPage
+		addPage(/*$media_type + '-list'*/);
 	}
 </script>
 

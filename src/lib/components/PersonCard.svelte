@@ -5,7 +5,7 @@
 </script>
 
 {#if datum.id}
-	<section id="main" class="h-full">
+	<section class="h-full">
 		<section
 			id="person-card"
 			class="w-44 xl:h-108 xl:w-60 my-0.5 xl:my-2 bg-skin-primary xl:rounded-lg"

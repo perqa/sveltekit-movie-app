@@ -6,12 +6,6 @@
 	import ToggleDarkMode from '$lib/utilities/ToggleDarkMode.svelte';
 	import { current_page, media_type } from '$lib/stores/store';
 
-	import { onMount } from 'svelte';
-
-	onMount(async () => {
-		console.info('>>> header');
-	});
-
 	function toggleHome() {
 		$media_type = 'movie';
 		$current_page = 1;

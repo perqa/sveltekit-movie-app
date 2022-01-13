@@ -7,13 +7,31 @@ const tree = {
   cards: {}
 };
 
+const registered = {};
+
 const onEnter = () => {
   const node = navigation.currentFocusNode;
-  const link = document.getElementById(node.id);
-  link.querySelector('a').click();
+  if (node) {
+    const link = document.getElementById(node.id);
+    if (link) {
+      link.querySelector('a').click();
+    }
+  }
 };
 
+export const reFocus = () => {
+  const node = navigation.currentFocusNode;
+  if (node) {
+    const elem = document.getElementById(node.id);
+    if (elem) {
+      elem.focus();
+    }
+  }
+};
+
+
 export const registerNode = (id, type, parentId) => {
+  if (registered[id]) return id;
   const opts = { parent: parentId, isFocusable: true };
   switch (type) {
     case 'list':
@@ -31,12 +49,30 @@ export const registerNode = (id, type, parentId) => {
 
 export const addPage = listId => {
   const opts = tree.lists[listId];
-  navigation.registerNode(listId, opts);
-  for (const [id, opts] of Object.entries(tree.rows)) {
-    navigation.registerNode(id, opts);
+  if (listId && opts) {
+    navigation.registerNode(listId, opts);
+    registered[listId] = true;
+    delete tree.lists[listId];
   }
-  for (const [id, opts] of Object.entries(tree.cards)) {
-    navigation.registerNode(id, opts);
+  try {
+    for (const [id, opts] of Object.entries(tree.rows)) {
+      navigation.registerNode(id, opts);
+      registered[id] = true;
+    }
+  } catch(e) {
+    console.error('[keyNavigation] Row', e, tree.rows);
+  } finally {
+    tree.rows = {};
+  }
+  try {
+    for (const [id, opts] of Object.entries(tree.cards)) {
+      navigation.registerNode(id, opts);
+      registered[id] = true;
+    }
+  } catch(e) {
+    console.error('[keyNavigation] Card', e, tree.cards);
+  } finally {
+    tree.cards = {};
   }
 };
 

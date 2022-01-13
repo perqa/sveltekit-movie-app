@@ -34,7 +34,7 @@
 	}
 </script>
 
-<section id="main" class="h-full">
+<section class="h-full">
 	<PersonList {data} />
 	{#if $current_page < total_pages}
 		<InfiniteScroll on:loadMore={() => loadMorePages()} />

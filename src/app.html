@@ -4,9 +4,10 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script src="/node_modules/focus-visible/dist/focus-visible.min.js"></script>
 		%svelte.head%
 	</head>
-	<body>
-		<div id="svelte">%svelte.body%</div>
+	<body id="root">
+		<div id="svelte" class="resize-none w-480 h-320">%svelte.body%</div>
 	</body>
 </html>

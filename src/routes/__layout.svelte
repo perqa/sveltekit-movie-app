@@ -60,7 +60,7 @@
 	<meta name="author" content="Wayne Morgan" />
 </svelte:head>
 
-<main class:$theme class="bg-skin-bg min-h-screen" id="root">
+<main class:$theme class="bg-skin-bg min-h-screen overflow-hidden snap-y smooth-scroll" id="scroll">
 	<Header />
 	<section class="max-w-7xl mx-auto">
 		<slot />

@@ -55,13 +55,19 @@ const config = {
 			},
 			gridTemplateRows: {
 				auto: 'repeat(auto-fill, minmax(0,auto))'
-			}
+			},
+      width: {
+        480: '120rem'
+      },
+      height: {
+        320: '80rem'
+      }
 		}
 	},
 	variants: {
 		extend: {
 			backgroundColor: ['active'],
-			transform: ['group-hover', 'focus-visible']
+			transform: ['group-hover', 'group-focus']
 		}
 	},
 	plugins: [
@@ -84,7 +90,7 @@ const config = {
 				}
 			};
 
-			addUtilities(newUtilities, ['group-hover', 'focus-visible']);
+			addUtilities(newUtilities, ['group-hover', 'group-focus']);
 		}),
 		require('@tailwindcss/line-clamp')
 	]
