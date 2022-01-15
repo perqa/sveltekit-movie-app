@@ -1,16 +1,37 @@
 <script lang="ts">
-	import TvCard from '$lib/components/TvCard.svelte';
+	import Row from '$lib/components/Row.svelte';
 	import Skeleton from '$lib/utilities/Skeleton.svelte';
+	import { getRows } from '$lib/stores/utilityFunctions';
+	import { registerNode, activate, deactivate, addPage } from '$lib/stores/keyNavigation';
+	import { beforeUpdate, onMount } from 'svelte';
+
+	const pageId = 'tv-list';
+
 	export let data: TvType[] = [];
+	export let rows: Array[] = []; //  = getRows({ ...data });
+	export let id = registerNode(pageId, 'list', 'container');
+
+	beforeUpdate(() => {
+		rows = getRows([ ...data ]);
+	});
+
+	onMount(() => {
+		addPage(pageId);
+	  activate(pageId);
+	  return () => {
+	  	deactivate(pageId);
+	  }
+	});
 </script>
 
 <section
-	id="movie-list"
-	class="bg-skin-tertiary flex flex-wrap justify-around max-w-7xl mx-auto xl:mt-2 xl:rounded-2xl"
+	id={id}
+	class="bg-skin-tertiary flex-wrap justify-around max-w-7xl mx-auto xl:mt-2 xl:rounded-2xl"
+	tabindex="0"
 >
-	{#if data.length > 0}
-		{#each data as datum}
-			<TvCard {datum} />
+	{#if rows.length > 0}
+		{#each rows as row, rowCount}
+			<Row {row} {rowCount} />
 		{/each}
 	{:else}
 		<Skeleton />

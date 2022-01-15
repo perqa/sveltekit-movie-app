@@ -17,7 +17,7 @@
 	<div class="max-w-7xl mx-auto flex justify-between pl-2 md:pl-5 lg:pl-7 pr-1 items-center h-10">
 		<div class="flex flex-row items-center">
 			<button
-			id="home"
+			id="button-home"
 			on:click|preventDefault={toggleHome}
 			class="text-3xl text-skin-base hover:text-skin-selected" href="/"
 				><i class="fa fa-home" />

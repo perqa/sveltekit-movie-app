@@ -4,6 +4,16 @@
 	import Modal from '$lib/utilities/Modal.svelte';
 	import Cast from '$lib/components/Cast.svelte';
 	import { media_type } from '$lib/stores/store';
+	import { onMount } from 'svelte';
+	import { focus, activate, deactivate } from '$lib/stores/keyNavigation';
+
+	const pageId = 'movie-media';
+	onMount(() => {
+		console.info('[MovieMedia] onMount');
+		activate(pageId);
+	  focus('movie-play');
+	  return () => deactivate(pageId);
+	});
 
 	export let movie_details: MovieType;
 	export let trailer_id: number;
@@ -18,7 +28,8 @@
 
 {#if movie_details.id && trailer_id}
 	<section
-		id="media"
+		id={pageId}
+		tabindex="0"
 		class="text-skin-inverted xl:mt-5 bg-no-repeat bg-right-top bg-contain xl:bg-cover xl:rounded-2xl"
 		style="background-image: url({IMAGE_API}original/{movie_details.backdrop_path})"
 	>
@@ -74,6 +85,8 @@
 						{/if}
 						{#if trailer_id !== 999}
 							<div
+								id="movie-play"
+								tabindex="0"
 								class="transform -translate-x-10 flex pl-5 cursor-pointer hover:opacity-80"
 								on:click={() => modal.show()}
 							>

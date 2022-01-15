@@ -1,29 +1,34 @@
 <script lang="ts">
 	import Row from '$lib/components/Row.svelte';
 	import Skeleton from '$lib/utilities/Skeleton.svelte';
-	import { registerNode } from '$lib/stores/keyNavigation';
+	import { getRows } from '$lib/stores/utilityFunctions';
+	import { registerNode, activate, deactivate, addPage } from '$lib/stores/keyNavigation';
+	import { beforeUpdate, onMount } from 'svelte';
+
+	const pageId = 'movie-list';
 
 	export let data: MovieType[] = [];
-
-	import { beforeUpdate } from 'svelte';
-	const getRows = datas => {
-		let rowsArr = [];
-		while (datas.length) {
-			rowsArr.push(datas.splice(0, 5));
-		}
-		return rowsArr;
-	}
 	export let rows: Array[] = []; //  = getRows({ ...data });
-	export let id = registerNode('movie-list', 'list', 'main');
+	export let id = registerNode(pageId, 'list', 'container');
 
 	beforeUpdate(() => {
 		rows = getRows([ ...data ]);
+	});
+
+	onMount(() => {
+		console.info('MovieList onMount');
+		addPage(pageId)
+	  activate(pageId);
+	  return () => {
+	  	deactivate(pageId);
+	  }
 	});
 </script>
 
 <section
 	id={id}
 	class="bg-skin-tertiary  flex-wrap justify-around max-w-7xl mx-auto xl:mt-2 xl:rounded-2xl"
+	tabindex="0"
 >
 	{#if rows.length > 0}
 		{#each rows as row, rowCount}

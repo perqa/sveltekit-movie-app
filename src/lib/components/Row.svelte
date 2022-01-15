@@ -12,7 +12,11 @@
 </script>
 
 {#if row?.length}
-	<div id={id} class="flex justify-around max-w-7xl mx-auto xl:mt-2 xl:rounded-2xl snap-start" >
+	<div
+		id={id}
+		class="flex justify-around max-w-7xl mx-auto xl:mt-2 xl:rounded-2xl snap-start"
+		tabindex="0"
+		>
 		{#if $media_type === 'movie'}
 			{#each row as datum, dataCount}
 				<MovieCard {datum} {rowCount} {dataCount} />

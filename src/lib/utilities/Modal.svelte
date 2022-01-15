@@ -15,7 +15,7 @@
 			<iframe
 				class="iframe absolute top-0 left-0 w-full h-full bg-contain"
 				title="Trailer"
-				src="https://www.youtube.com/embed/{trailer_id}?rel=0"
+				src="https://www.youtube.com/embed/{trailer_id}?rel=0&autoplay=1"
 				allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 				allowfullscreen
 			>
@@ -24,6 +24,7 @@
 		</div>
 
 		<div
+			id="close-trailer"
 			class="close absolute top-1 left-1 text-red-900 text-4xl xl:text-5xl hover:font-bold"
 			on:click={() => hide()}
 		>

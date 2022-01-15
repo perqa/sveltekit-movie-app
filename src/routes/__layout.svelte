@@ -34,6 +34,12 @@
 	import { onMount } from 'svelte';
 	import { addPage, initNavigation } from '$lib/stores/keyNavigation';
 
+	// How to detect route changes
+	// import { page } from '$app/stores';
+	// page.subscribe(({ url, params }) => {
+	// 	console.info('>>> url',url,params);
+	// });
+
 	onMount(() => {
 		initNavigation();
 	  addPage('movie-list');

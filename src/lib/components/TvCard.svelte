@@ -2,14 +2,19 @@
 	import { media_type, show_name } from '$lib/stores/store';
 	import ProgressBar from '$lib/utilities/ProgressBar.svelte';
 	import Spinner from '$lib/utilities/Spinner.svelte';
+	import { registerNode } from '$lib/stores/keyNavigation';
+
 	const IMAGE_API = 'https://image.tmdb.org/t/p/w300';
 
 	export let datum: TvType;
 	$show_name = datum.name;
+	export let rowCount;
+	export let dataCount;
+	export let id = registerNode('tv-card-' + (10*rowCount + dataCount), 'card', $media_type + '-row-' + rowCount);
 </script>
 
 {#if datum.id}
-	<section id="tv-card" class="group perspective-1000 w-44 xl:w-60 my-0.5 xl:my-2 xl:rounded-lg">
+	<section id={id} class="group perspective-1000 w-44 xl:w-60 my-0.5 xl:my-2 xl:rounded-lg" tabindex="0">
 		<div class="relative preserve-3d w-full duration-700 group-hover:rotate-y-180">
 			<div class="backface-hidden top-0 right-0 text-skin-base bg-skin-bg xl:rounded-lg">
 				<img

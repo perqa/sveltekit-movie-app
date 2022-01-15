@@ -26,7 +26,7 @@
 	<div class="group inline-block relative z-50">
 		<button
 			aria-label="Movies"
-			id="movie"
+			id="button-movie"
 			on:click|preventDefault={toggleMovie}
 			class:text-skin-selected={$media_type === 'movie'}
 			class="text-skin-base font-semibold py-2 rounded inline-flex items-center hover:text-skin-selected"
@@ -41,7 +41,7 @@
 	<div class="group inline-block relative z-50">
 		<button
 			aria-label="TV Shows"
-			id="tv"
+			id="button-tv"
 			on:click|preventDefault={toggleTv}
 			class:text-skin-selected={$media_type === 'tv'}
 			class="text-skin-base font-semibold py-2 rounded inline-flex items-center hover:text-skin-selected"
@@ -56,7 +56,7 @@
 	<div class="group inline-block relative z-50">
 		<button
 			aria-label="People"
-			id="person"
+			id="button-person"
 			on:click|preventDefault={togglePerson}
 			class:text-skin-selected={$media_type === 'person'}
 			class="text-skin-base font-semibold py-2 rounded inline-flex items-center hover:text-skin-selected"
@@ -71,7 +71,7 @@
 		<div class="group inline-block relative z-50">
 			<button
 				aria-label="Genres"
-				id="genre"
+				id="button-genre"
 				class="text-skin-base font-semibold py-2 rounded inline-flex items-center hover:text-skin-selected"
 			>
 				<span><i class="fa fa-tag" aria-hidden="true" /></span>

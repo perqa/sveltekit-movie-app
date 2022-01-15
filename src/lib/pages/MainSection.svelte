@@ -5,14 +5,11 @@
 	import InfiniteScroll from '$lib/utilities/InfiniteScroll.svelte';
 	import { current_page, media_type } from '$lib/stores/store';
 	import { get } from 'svelte/store';
-	import { onMount } from 'svelte';
-	import { reFocus, addPage } from '$lib/stores/keyNavigation';
+	import { addPage } from '$lib/stores/keyNavigation';
 
 	export let data = [];
 	export let total_pages = 1;
 	export let genres = undefined;
-
-	onMount(reFocus);
 
 	async function moreData() {
 		let res
@@ -54,7 +51,7 @@
 	}
 </script>
 
-<section id="main" class="h-full">
+<section id="main-section" class="h-full">
 	<!-- <PageTitle /> -->
 
 	{#if $media_type === 'person'}

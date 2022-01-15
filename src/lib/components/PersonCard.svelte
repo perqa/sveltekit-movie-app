@@ -1,14 +1,22 @@
 <script lang="ts">
+	import { media_type } from '$lib/stores/store';
 	import Spinner from '$lib/utilities/Spinner.svelte';
+	import { registerNode } from '$lib/stores/keyNavigation';
+
 	const IMAGE_API = 'https://image.tmdb.org/t/p/w500';
+
 	export let datum: PersonType;
+	export let rowCount;
+	export let dataCount;
+	export let id = registerNode('person-card-' + (10*rowCount + dataCount), 'card', $media_type + '-row-' + rowCount);
 </script>
 
 {#if datum.id}
 	<section class="h-full">
 		<section
-			id="person-card"
+			id={id}
 			class="w-44 xl:h-108 xl:w-60 my-0.5 xl:my-2 bg-skin-primary xl:rounded-lg"
+			tabindex="0"
 		>
 			<a href={`/person/${datum.id}`} class=" top-0 right-0 text-skin-base  xl:rounded-lg">
 				<img

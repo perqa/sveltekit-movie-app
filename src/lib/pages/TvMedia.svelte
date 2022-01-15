@@ -5,6 +5,16 @@
 	import Cast from '$lib/components/Cast.svelte';
 	import { media_type, season_count, show_id, show_name } from '$lib/stores/store';
 	import Seasons from '$lib/utilities/Seasons.svelte';
+	import { onMount } from 'svelte';
+	import { focus, activate, deactivate } from '$lib/stores/keyNavigation';
+
+	const pageId = 'tv-media';
+	onMount(() => {
+		activate(pageId);
+	  focus('tv-play');
+	  return () => deactivate(pageId);
+	});
+
 
 	export let tv_details: TvType;
 	export let trailer_id: number;
@@ -23,7 +33,8 @@
 
 {#if tv_details.id && trailer_id}
 	<section
-		id="media"
+		id={pageId}
+		tabindex="0"
 		class="text-skin-inverted xl:mt-5 bg-no-repeat bg-right-top bg-contain xl:bg-cover xl:rounded-2xl"
 		style="background-image: url({IMAGE_API}original/{tv_details.backdrop_path})"
 	>
@@ -72,6 +83,8 @@
 						{/if}
 						{#if trailer_id !== 999}
 							<div
+								id="tv-play"
+								tabindex="0"
 								class="transform -translate-x-10 flex pl-5 cursor-pointer hover:opacity-80"
 								on:click={() => modal.show()}
 							>
