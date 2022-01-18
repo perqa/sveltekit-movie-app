@@ -5,15 +5,16 @@
 
 	import ToggleDarkMode from '$lib/utilities/ToggleDarkMode.svelte';
 	import { current_page, media_type } from '$lib/stores/store';
+	import { fly } from 'svelte/transition';
 
 	function toggleHome() {
 		$media_type = 'movie';
 		$current_page = 1;
-		goto('/');
+		goto('/', { keepfocus: true });
 	}
 </script>
 
-<header class="bg-skin-secondary" id="header">
+<header class="bg-skin-secondary" id="header" transition:fly="{{ y: -60, duration: 1000 }}">
 	<div class="max-w-7xl mx-auto flex justify-between pl-2 md:pl-5 lg:pl-7 pr-1 items-center h-10">
 		<div class="flex flex-row items-center">
 			<button

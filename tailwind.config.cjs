@@ -57,7 +57,8 @@ const config = {
 				auto: 'repeat(auto-fill, minmax(0,auto))'
 			},
       width: {
-        480: '120rem'
+        480: '120rem',
+        'full-2': '200%'
       },
       height: {
         320: '80rem'

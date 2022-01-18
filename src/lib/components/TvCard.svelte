@@ -15,7 +15,7 @@
 
 {#if datum.id}
 	<section id={id} class="group perspective-1000 w-44 xl:w-60 my-0.5 xl:my-2 xl:rounded-lg" tabindex="0">
-		<div class="relative preserve-3d w-full duration-700 group-hover:rotate-y-180">
+		<div class="relative preserve-3d w-full duration-700 group-hover:rotate-y-180 group-focus:rotate-y-180 group-focus:delay-500">
 			<div class="backface-hidden top-0 right-0 text-skin-base bg-skin-bg xl:rounded-lg">
 				<img
 					class="oject-cover w-44 h-64 xl:w-60 xl:h-90 xl:rounded-t-lg  text-skin-muted "

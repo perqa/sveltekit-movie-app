@@ -7,3 +7,8 @@
 
 
 Failed to fetch dynamically imported module: http://localhost:3000/src/routes/movie/[id].svelte
+
+
+clientTop: 0
+offsetTop: 56
+scrollTop: 0

@@ -2,7 +2,7 @@
 	"name": "sveltekit-movie-app",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "svelte-kit dev ",
+		"dev": "svelte-kit dev --host 0.0.0.0",
 		"build": "svelte-kit build",
 		"preview": "svelte-kit preview",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
@@ -44,6 +44,7 @@
 	"dependencies": {
 		"@tailwindcss/line-clamp": "^0.2.2",
 		"focus-visible": "^5.2.0",
+		"just-throttle": "^4.0.1",
 		"lrud": "file:../lrud",
 		"sapper-environment": "^1.0.1"
 	}

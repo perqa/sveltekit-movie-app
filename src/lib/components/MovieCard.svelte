@@ -14,8 +14,17 @@
 </script>
 
 {#if datum.id}
-	<section id={id} class="group perspective-1000 w-44 xl:w-60 my-0.5 xl:my-2 xl:rounded-lg" tabindex="0">
-		<div class="relative preserve-3d w-full duration-700 group-hover:rotate-y-180 group-focus:rotate-y-180 group-focus:delay-300" >
+
+	<!-- ToDo: All this works, but every card is repainted on very scroll-step.
+	Problems are backface-hidden and ProgressBar.
+	If one child renders, so does the rest of the component.
+
+	<div id={id} class="w-44 h-96 xl:w-60 my-0.5 xl:my-2 xl:rounded-lg bg-red-500 relative perspective-1000" tabindex="0">
+		<div class="w-12 h-12 preserve-3d duration-700 group-hover:rotate-y-180 group-focus:rotate-y-180 group-focus:delay-500 overflow-hidden overflow-ellipsis absolute transform origin-top-left">HEJ</div>
+	</div>
+-->
+	<section id={id} class="group perspective-1000 w-44 xl:w-60 my-0.5 xl:my-2 xl:rounded-lg" tabindex="0" >
+		<div class="relative preserve-3d w-full duration-700 group-hover:rotate-y-180 group-focus:rotate-y-180 group-focus:delay-500" >
 			<div class="backface-hidden top-0 right-0 text-skin-base bg-skin-bg xl:rounded-lg">
 				<img
 					class="oject-cover w-44 h-64 xl:w-60 xl:h-90 xl:rounded-t-lg  text-skin-muted "

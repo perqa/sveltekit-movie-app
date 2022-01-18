@@ -6,19 +6,19 @@
 	function toggleMovie() {
 		$media_type = 'movie';
 		$current_page = 1;
-		goto('/trending/movie');
+		goto('/trending/movie', { keepfocus: true });
 	}
 
 	function toggleTv() {
 		$current_page = 1;
 		$media_type = 'tv';
-		goto('/trending/tv');
+		goto('/trending/tv', { keepfocus: true });
 	}
 
 	function togglePerson() {
 		$current_page = 1;
 		$media_type = 'person';
-		goto('/trending/person');
+		goto('/trending/person', { keepfocus: true });
 	}
 </script>
 

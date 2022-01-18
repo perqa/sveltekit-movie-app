@@ -29,7 +29,7 @@
 	export let movie_genre: Genre[];
 	export let tv_networks: Network[];
 	import Header from '$lib/components/Header.svelte';
-	import { tv_genres, movie_genres, tv_network } from '$lib/stores/store';
+	import { tv_genres, movie_genres, tv_network, hide_header } from '$lib/stores/store';
 	import { theme } from '$lib/stores/theme-store';
 	import { onMount } from 'svelte';
 	import { addPage, initNavigation } from '$lib/stores/keyNavigation';
@@ -48,6 +48,7 @@
 	$tv_genres = tv_genre;
 	$movie_genres = movie_genre;
 	$tv_network = tv_networks
+
 </script>
 
 <svelte:head>
@@ -66,9 +67,11 @@
 	<meta name="author" content="Wayne Morgan" />
 </svelte:head>
 
-<main class:$theme class="bg-skin-bg min-h-screen overflow-hidden snap-y smooth-scroll" id="scroll">
-	<Header />
-	<section class="max-w-7xl mx-auto">
+<main class:$theme class="bg-skin-bg min-h-screen">
+	{#if (!$hide_header)}
+		<Header/>
+	{/if}
+	<section class="w-480 px-4 mx-auto overflow-auto">
 		<slot />
 	</section>
 </main>

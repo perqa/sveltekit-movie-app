@@ -1,4 +1,6 @@
 import { Lrud } from 'Lrud';
+import throttle from 'just-throttle';
+import { setKeyCode } from './utilityFunctions'
 const navigation = new Lrud();
 
 const tree = {
@@ -77,7 +79,7 @@ export const registerNode = (id, type, parentId) => {
       tree.lists[id] = { ...opts, orientation: 'vertical', isIndexAlign: true };
       break;
     case 'row':
-      tree.rows[id] = { ...opts, orientation: 'horizontal' };
+      tree.rows[id] = { ...opts, orientation: 'horizontal', isWrapping: true };
       break;
     case 'card':
       tree.cards[id] = { ...opts, onSelect: onEnter };
@@ -163,19 +165,22 @@ export const initNavigation = () => {
     }
   });
   navigation.assignFocus('button-home');
-  document.onkeydown = function (event) {
-    if ([27].indexOf(event.keyCode) > -1 ) {//event.key: "Escape"
-      const elem = document.getElementById('close-trailer');
-      if (elem) {
-        elem.click();
+  document.onkeydown = throttle(
+    function (event) {
+      setKeyCode(event);
+      if ([27].indexOf(event.keyCode) > -1 ) {//event.key: "Escape"
+        const elem = document.getElementById('close-trailer');
+        if (elem) {
+          elem.click();
+        } else {
+          history.back();
+        }
       } else {
-        history.back();
+        navigation.handleKeyEvent(event, {forceFocus: true});
       }
-    } else {
-      navigation.handleKeyEvent(event, {forceFocus: true});
-    }
-    console.info('navigation.currentFocusNode?.id', navigation.currentFocusNode?.id);
-  }
+      console.info('navigation.currentFocusNode?.id', navigation.currentFocusNode?.id);
+    }, 300, {leading: true}
+  );
 
   document.body.removeAttribute('tabindex');
 
