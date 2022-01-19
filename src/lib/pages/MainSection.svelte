@@ -3,11 +3,10 @@
 	import TvList from '$lib/pages/TvList.svelte';
 	import PersonList from '$lib/pages/PersonList.svelte';
 
-	import { current_page, media_type, hide_header } from '$lib/stores/store';
+	import { current_page, media_type, hide_header, fast_mode } from '$lib/stores/store';
 	import { get } from 'svelte/store';
 	import { onMount } from 'svelte';
-	import { addPage, setkeyBlock, unsetkeyBlock } from '$lib/stores/keyNavigation';
-	import { getLastKey } from '$lib/stores/utilityFunctions';
+	import { addPage, setkeyBlock, unsetkeyBlock, getLastKey } from '$lib/stores/keyNavigation';
 
 	export let data = [];
 	export let total_pages = 1;
@@ -31,7 +30,12 @@
 			scroller.addEventListener('transitionend', unsetkeyBlock);
 		} else {
 			scroller?.classList.remove('transition-transform', 'duration-300');
+			scroller.removeEventListener('transitionend', unsetkeyBlock);
 		}
+		return () => {
+			scroller?.classList.remove('transition-transform', 'duration-300');
+			scroller.removeEventListener('transitionend', unsetkeyBlock);
+		};
 	});
 
   const scroll = e => {
@@ -47,11 +51,11 @@
     if (USE_TRANSFORM) {
     	setkeyBlock(scroller.id);
 	    const newPos = Math.min(0, scrollRect.top + SCROLL_TOP_MARGIN - cardRect.top);
-	    $hide_header = (newPos < HEADER_HIDE_SCROLL_POS);
+	    $hide_header = (scrollRect.top > HEADER_HIDE_SCROLL_POS);
 	    scroller.style.transform = 'translate3d(0, '+newPos+'px, 0)';
 	  } else {
 	  	const newPos = Math.max(0, cardRect.top - scrollRect.top - SCROLL_TOP_MARGIN);
-	    $hide_header = (newPos > -HEADER_HIDE_SCROLL_POS);
+	    $hide_header = (scrollRect.top < -HEADER_HIDE_SCROLL_POS);
 	    component.scroll({top: newPos, left: 0, behavior: 'smooth'});
 	  }
 	  const offset = scrollRect.bottom - cardRect.bottom;

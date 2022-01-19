@@ -20,7 +20,7 @@
 		setCanvas(progress_percent);
 	});
 
-	function setCanvas(x: number) {
+	function setCanvas(pp: number) {
 		var context: CanvasRenderingContext2D = canvas.getContext('2d');
 		var x = context.canvas.width / 2;
 		var y = context.canvas.height / 2;
@@ -31,7 +31,7 @@
 		context.stroke();
 		context.strokeStyle = rgbcolour;
 		context.beginPath();
-		context.arc(x, y, 40, (Math.PI / 180) * 270, (Math.PI / 180) * (270 + progress_percent * 3.6));
+		context.arc(x, y, 40, (Math.PI / 180) * 270, (Math.PI / 180) * (270 + pp * 3.6));
 		context.stroke();
 	}
 </script>
@@ -39,8 +39,8 @@
 <section id="progress" class="bg-gray-900 block rounded-full align-center relative w-24 h-24">
 	<div class="box">
 		<div class="percent">
-			<canvas class="w-24 h-24" bind:this={canvas} width="98" height="98" />
-			<div class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
+			<canvas class="static w-24 h-24" bind:this={canvas} width="98" height="98" />
+			<div class="-my-16 w-full h-full flex justify-center items-center">
 				<h2 class="text-gray-200 text-3xl">
 					{progress_percent}<span class="text-xl align-top">%</span>
 				</h2>

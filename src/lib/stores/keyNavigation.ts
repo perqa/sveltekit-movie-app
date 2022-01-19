@@ -1,6 +1,6 @@
 import { Lrud } from 'Lrud';
+import { fast_mode } from './store';
 //import throttle from 'just-throttle';
-import { setKeyCode } from './utilityFunctions'
 const navigation = new Lrud();
 
 const tree = {
@@ -14,6 +14,66 @@ let activeView;
 const blockKeys = {};
 const keyDown = {};
 const lastFocus = {};
+let lastKeyCode;
+let fastmodeId;
+let fastMode;
+
+fast_mode.subscribe(value => fastMode = value);
+
+const keyMap = {
+  40: 'DOWN', // Arrow Down
+  37: 'LEFT', // Arrow Left
+  39: 'RIGHT', // Arrow Right
+  38: 'UP' // Arrow Up
+};
+
+export const setKeyCode = e => {
+  lastKeyCode = e.keyCode;
+};
+
+export const getLastKey = () => {
+  return keyMap[lastKeyCode];
+};
+
+
+export const setkeyBlock = id => {
+  if (!blockKeys[id]) {
+    blockKeys[id] = setTimeout(() => delete blockKeys[id], 1000);
+  }
+};
+
+export const unsetkeyBlock = e => {
+  const id = e.target.id;
+  if (id && blockKeys[id]) {
+    clearTimeout(blockKeys[id]);
+    delete blockKeys[id];
+  }
+};
+
+export const getkeyBlock = () => {
+  return Object.keys(blockKeys).length > 0;
+};
+
+const setKeyDown = event => {
+  keyDown[event.keyCode] = true;
+  if (!fastMode && getLastKey()) {
+    fastmodeId = setTimeout(() => {
+      fast_mode.set(true);
+      console.info('>>> fast_mode ON');
+    }, 300);
+  }
+};
+
+const setKeyUp = event => {
+  delete keyDown[event.keyCode];
+  if (fastmodeId) {
+    clearTimeout(fastmodeId);
+  }
+  fast_mode.set(false);
+};
+
+export const isKeyDown = keyCode => keyDown[keyCode];
+export const noKeyDown = () => !Object.keys(keyDown).length;
 
 export const activate = id => {
   console.info('[keyNavigation] activate', id, !!document.getElementById(id));
@@ -71,25 +131,6 @@ export const reFocus = () => {
     }
   }
 };
-
-export const setkeyBlock = id => {
-  blockKeys[id] = setTimeout(() => delete blockKeys[key], 1000);
-};
-
-export const unsetkeyBlock = e => {
-  const id = e.target.id;
-  if (id && blockKeys[id]) {
-    clearTimeout(blockKeys[id]);
-    delete blockKeys[id];
-  }
-};
-
-export const getkeyBlock = () => {
-  return Object.keys(blockKeys).length > 0;
-};
-
-export const isKeyDown = keyCode => keyDown[keyCode];
-export const noKeyDown = () => !Object.keys(keyDown).length;
 
 export const registerNode = (id, type, parentId) => {
   if (registered[id]) return id; //
@@ -186,7 +227,7 @@ export const initNavigation = () => {
   });
 
   document.onkeydown = function (event) {
-    keyDown[event.keyCode] = true;
+    setKeyDown(event);
     if (getkeyBlock()) {
       event.preventDefault();
       return false;
@@ -205,7 +246,7 @@ export const initNavigation = () => {
     console.info('navigation.currentFocusNode?.id', navigation.currentFocusNode?.id);
   };
 
-  document.onkeyup = event => delete keyDown[event.keyCode];
+  document.onkeyup = setKeyUp;
 
   document.body.removeAttribute('tabindex');
 

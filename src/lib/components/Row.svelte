@@ -3,8 +3,7 @@
 	import MovieCard from '$lib/components/MovieCard.svelte';
 	import PersonCard from '$lib/components/PersonCard.svelte';
 	import TvCard from '$lib/components/TvCard.svelte';
-	import { registerNode } from '$lib/stores/keyNavigation';
-	import { getLastKey } from '$lib/stores/utilityFunctions';
+	import { registerNode, getLastKey } from '$lib/stores/keyNavigation';
 
 	let component;
 	const SCROLL_RIGHT_MARGIN = 1900;
