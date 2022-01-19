@@ -71,7 +71,7 @@
 	{#if (!$hide_header)}
 		<Header/>
 	{/if}
-	<section class="w-480 px-4 mx-auto overflow-auto">
+	<section class="w-480 px-4 mx-auto">
 		<slot />
 	</section>
 </main>

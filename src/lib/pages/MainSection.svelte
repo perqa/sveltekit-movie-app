@@ -6,7 +6,7 @@
 	import { current_page, media_type, hide_header } from '$lib/stores/store';
 	import { get } from 'svelte/store';
 	import { onMount } from 'svelte';
-	import { addPage } from '$lib/stores/keyNavigation';
+	import { addPage, setkeyBlock, unsetkeyBlock } from '$lib/stores/keyNavigation';
 	import { getLastKey } from '$lib/stores/utilityFunctions';
 
 	export let data = [];
@@ -16,28 +16,47 @@
 	let nRes = 20;
 	let isLoadMore = false;
 	let component;
+	let scroller,
 
 	const SCROLL_TOP_MARGIN = 200; //pixels
 	const LOAD_MARGIN = 1000; //pixels
 	const HEADER_HIDE_SCROLL_POS = -10; // pixels
+	const USE_TRANSFORM = true;
 
-	onMount(loadMorePages);
+	onMount(() => {
+		loadMorePages();
+		scroller = component.children[0];
+		if (USE_TRANSFORM) {
+			scroller?.classList.add('transition-transform', 'duration-300');
+			scroller.addEventListener('transitionend', unsetkeyBlock);
+		} else {
+			scroller?.classList.remove('transition-transform', 'duration-300');
+		}
+	});
 
   const scroll = e => {
   	const lastKey = getLastKey();
   	if (['UP', 'DOWN'].indexOf(lastKey) === -1) {
   		return;
   	}
-    const target = e.target;
-    const self = component;
-    const cardRect = target?.getBoundingClientRect();
-    const selfRect = self?.getBoundingClientRect();
 
-    const newPos = Math.min(0, selfRect.top + SCROLL_TOP_MARGIN - cardRect.top);
-    $hide_header = (newPos < HEADER_HIDE_SCROLL_POS);
-    self.style.transform = 'translate3d(0, '+newPos+'px, 0)';
-    const offset = selfRect.bottom - cardRect.bottom;
-    console.info('[MovieList] self offset', offset);
+    const target = e.target;
+    const cardRect = target?.getBoundingClientRect();
+    const scrollRect = scroller?.getBoundingClientRect();
+
+    if (USE_TRANSFORM) {
+    	setkeyBlock(scroller.id);
+	    const newPos = Math.min(0, scrollRect.top + SCROLL_TOP_MARGIN - cardRect.top);
+	    $hide_header = (newPos < HEADER_HIDE_SCROLL_POS);
+	    scroller.style.transform = 'translate3d(0, '+newPos+'px, 0)';
+	  } else {
+	  	const newPos = Math.max(0, cardRect.top - scrollRect.top - SCROLL_TOP_MARGIN);
+	    $hide_header = (newPos > -HEADER_HIDE_SCROLL_POS);
+	    component.scroll({top: newPos, left: 0, behavior: 'smooth'});
+	  }
+	  const offset = scrollRect.bottom - cardRect.bottom;
+
+    console.info('[MovieList] scroll offset', offset);
     if ($current_page < total_pages && offset <= LOAD_MARGIN) {
 			if (!isLoadMore) {
 				console.info('[MovieList] LOADING');
@@ -94,7 +113,7 @@
 
 <section
 	id="main-section"
-	class="h-full transition-transform duration-300"
+	class="h-320 overflow-hidden"
 	on:focusin={scroll}
   bind:this={component}
  >

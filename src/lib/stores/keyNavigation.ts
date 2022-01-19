@@ -1,5 +1,5 @@
 import { Lrud } from 'Lrud';
-import throttle from 'just-throttle';
+//import throttle from 'just-throttle';
 import { setKeyCode } from './utilityFunctions'
 const navigation = new Lrud();
 
@@ -11,6 +11,8 @@ const tree = {
 
 const registered = {};
 let activeView;
+const blockKeys = {};
+const keyDown = {};
 const lastFocus = {};
 
 export const activate = id => {
@@ -70,6 +72,24 @@ export const reFocus = () => {
   }
 };
 
+export const setkeyBlock = id => {
+  blockKeys[id] = setTimeout(() => delete blockKeys[key], 1000);
+};
+
+export const unsetkeyBlock = e => {
+  const id = e.target.id;
+  if (id && blockKeys[id]) {
+    clearTimeout(blockKeys[id]);
+    delete blockKeys[id];
+  }
+};
+
+export const getkeyBlock = () => {
+  return Object.keys(blockKeys).length > 0;
+};
+
+export const isKeyDown = keyCode => keyDown[keyCode];
+export const noKeyDown = () => !Object.keys(keyDown).length;
 
 export const registerNode = (id, type, parentId) => {
   if (registered[id]) return id; //
@@ -137,7 +157,7 @@ export const initNavigation = () => {
   );
 
   const header = document.getElementById('header');
-  const headerButtons = Array.from(header.querySelectorAll('button'));
+  const headerButtons = Array.from(header?.querySelectorAll('button'));
   headerButtons.forEach(button => {
     console.info('>>> button.id', button.id);
     if (button.id) {
@@ -164,26 +184,32 @@ export const initNavigation = () => {
       }
     }
   });
-  navigation.assignFocus('button-home');
-  document.onkeydown = throttle(
-    function (event) {
-      setKeyCode(event);
-      if ([27].indexOf(event.keyCode) > -1 ) {//event.key: "Escape"
-        const elem = document.getElementById('close-trailer');
-        if (elem) {
-          elem.click();
-        } else {
-          history.back();
-        }
+
+  document.onkeydown = function (event) {
+    keyDown[event.keyCode] = true;
+    if (getkeyBlock()) {
+      event.preventDefault();
+      return false;
+    };
+    setKeyCode(event);
+    if ([27].indexOf(event.keyCode) > -1 ) {//event.key: "Escape"
+      const elem = document.getElementById('close-trailer');
+      if (elem) {
+        elem.click();
       } else {
-        navigation.handleKeyEvent(event, {forceFocus: true});
+        history.back();
       }
-      console.info('navigation.currentFocusNode?.id', navigation.currentFocusNode?.id);
-    }, 300, {leading: true}
-  );
+    } else {
+      navigation.handleKeyEvent(event, {forceFocus: true});
+    }
+    console.info('navigation.currentFocusNode?.id', navigation.currentFocusNode?.id);
+  };
+
+  document.onkeyup = event => delete keyDown[event.keyCode];
 
   document.body.removeAttribute('tabindex');
 
+  navigation.assignFocus('button-home');
   activeView = 'movie-list';
   registered.inited = true;
   registered['movie-media'] = true;
