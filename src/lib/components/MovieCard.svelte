@@ -25,7 +25,7 @@
 -->
 	<section id={id} class="group perspective-1000 w-44 xl:w-60 my-0.5 xl:my-2 xl:rounded-lg" tabindex="0" >
 		<div class="relative preserve-3d w-full {$fast_mode ? '' : 'duration-700 group-hover:rotate-y-180 group-focus:rotate-y-180 group-focus:delay-500'}">
-			<div class=" top-0 right-0 text-skin-base bg-skin-bg xl:rounded-lg {$fast_mode ? '' : 'backface-hidden'}">
+			<div class="top-0 right-0 text-skin-base bg-skin-bg xl:rounded-lg {$fast_mode ? '' : 'backface-hidden'}">
 				<img
 					class="oject-cover w-44 h-64 xl:w-60 xl:h-90 xl:rounded-t-lg  text-skin-muted "
 					src={datum.poster_path ? IMAGE_API + datum.poster_path : '/default.jpg'}

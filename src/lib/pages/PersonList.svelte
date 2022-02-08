@@ -26,7 +26,7 @@
 
 <section
 	id={id}
-	class="bg-skin-tertiary flex-wrap justify-around max-w-7xl xl:mt-2 mx-auto xl:rounded-2xl"
+	class="bg-skin-tertiary justify-around w-full xl:mt-2 px-2 xl:rounded-2xl"
 	tabindex="0"
 >
 	{#if rows.length > 0}

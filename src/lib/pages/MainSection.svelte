@@ -15,11 +15,11 @@
 	let nRes = 20;
 	let isLoadMore = false;
 	let component;
-	let scroller,
+	let scroller;
 
 	const SCROLL_TOP_MARGIN = 200; //pixels
 	const LOAD_MARGIN = 1000; //pixels
-	const HEADER_HIDE_SCROLL_POS = -10; // pixels
+	const HEADER_HIDE_SCROLL_POS = -250; // pixels
 	const USE_TRANSFORM = true;
 
 	onMount(() => {
@@ -51,11 +51,11 @@
     if (USE_TRANSFORM) {
     	setkeyBlock(scroller.id);
 	    const newPos = Math.min(0, scrollRect.top + SCROLL_TOP_MARGIN - cardRect.top);
-	    $hide_header = (scrollRect.top > HEADER_HIDE_SCROLL_POS);
+	    $hide_header = (newPos < HEADER_HIDE_SCROLL_POS);
 	    scroller.style.transform = 'translate3d(0, '+newPos+'px, 0)';
 	  } else {
 	  	const newPos = Math.max(0, cardRect.top - scrollRect.top - SCROLL_TOP_MARGIN);
-	    $hide_header = (scrollRect.top < -HEADER_HIDE_SCROLL_POS);
+	    $hide_header = (scrollRect.top > -HEADER_HIDE_SCROLL_POS);
 	    component.scroll({top: newPos, left: 0, behavior: 'smooth'});
 	  }
 	  const offset = scrollRect.bottom - cardRect.bottom;

@@ -30,7 +30,7 @@
 	<section
 		id={pageId}
 		tabindex="0"
-		class="text-skin-inverted xl:mt-5 bg-no-repeat bg-right-top bg-contain xl:bg-cover xl:rounded-2xl"
+		class="text-skin-inverted xl:mt-5 bg-no-repeat bg-right-top bg-contain xl:bg-cover xl:rounded-2xl max-w-7xl mx-auto"
 		style="background-image: url({IMAGE_API}original/{movie_details.backdrop_path})"
 	>
 		<div
