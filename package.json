@@ -45,7 +45,7 @@
 		"@tailwindcss/line-clamp": "^0.2.2",
 		"focus-visible": "^5.2.0",
 		"just-throttle": "^4.0.1",
-		"lrud": "file:../lrud",
+		"lrud": "file:./libs/lrud",
 		"sapper-environment": "^1.0.1"
 	}
 }
