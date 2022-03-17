@@ -1,4 +1,4 @@
-import { Lrud } from 'Lrud';
+import { Lrud } from 'lrud';
 import { fast_mode } from './store';
 //import throttle from 'just-throttle';
 const navigation = new Lrud();

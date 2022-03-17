@@ -20,9 +20,12 @@ const config = {
 		vite: {
 			server:{
 				fs: {
-					allow: ['./libs']
+					allow: ['./libs', '..']
 				}
 			},
+			ssr:{
+        noExternal: ['Lrud']
+      },
 			resolve: {
 				alias: {
 					// src: path.resolve('./src'),
