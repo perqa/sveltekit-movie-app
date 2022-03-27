@@ -67,7 +67,7 @@
 	<meta name="author" content="Wayne Morgan" />
 </svelte:head>
 
-<main class:$theme class="bg-skin-bg min-h-screen">
+<main class:$theme class="bg-skin-bg">
 	{#if (!$hide_header)}
 		<Header/>
 	{/if}

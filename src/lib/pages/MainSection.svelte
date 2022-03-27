@@ -21,6 +21,7 @@
 	const LOAD_MARGIN = 1000; //pixels
 	const HEADER_HIDE_SCROLL_POS = -250; // pixels
 	const USE_TRANSFORM = true;
+	$hide_header = false;
 
 	onMount(() => {
 		loadMorePages();

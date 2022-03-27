@@ -81,7 +81,14 @@ export const activate = id => {
     navigation.moveNode(id, 'container');
     activeView = id;
     try {
-      if (lastFocus[activeView]) {
+      console.info('>>> activate', id, activeView);
+      // ToDo: Temporary hack until svelte-stack-router is in place
+      const viewInfo = activeView.split('-');
+      if (viewInfo.length && viewInfo[1] === 'list') {
+        navigation.assignFocus(viewInfo[0]+'-card-0');
+      }
+      // ToDo: Use the below instead once svelte-stack-router is in place
+      else if (lastFocus[activeView]) {
         focus(lastFocus[activeView]);
       }
     } catch(e) {
@@ -98,8 +105,9 @@ export const deactivate = id => {
 };
 
 export const focus = id => {
+  console.info('>>> focus', id);
   navigation.assignFocus(id);
-  reFocus();
+  //reFocus();
 }
 
 // export const override = () => {
@@ -115,7 +123,7 @@ const onEnter = () => {
   if (node) {
     const elem = document.getElementById(node.id);
     if (elem) {
-      elem.querySelector('a').click();
+      elem.querySelector('a')?.click();
     }
   }
 };
@@ -127,7 +135,7 @@ export const reFocus = () => {
     if (elem) {
       const pre = document.activateElement;
       elem.focus();
-      console.info('Active element pre, post', document.activateElement, pre, elem);
+      console.info('>>> Active element pre, post', pre, elem);
     }
   }
 };

@@ -40,3 +40,8 @@ By default, `npm run build` will generate a Node app that you can run with `node
 - ...more soon
 
 [See the adapter documentation for more detail](https://kit.svelte.dev/docs#adapters)
+
+## ToDo
+
+Switch to svelte-stack-router, so that details pages can be opened on top of scrollable list pages, to preserve their state when going back from details pages.
+https://www.npmjs.com/package/svelte-stack-router?activeTab=readme
